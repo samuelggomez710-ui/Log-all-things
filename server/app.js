@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 // Set path to log.csv
-const LOG_FILE = path.join
+const LOG_FILE = path.join(__dirname, 'log.csv');
 
 // Log every request
 app.use((req, res, next) => {

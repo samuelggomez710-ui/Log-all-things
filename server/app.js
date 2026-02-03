@@ -9,7 +9,7 @@ const LOG_FILE = path.join(__dirname, 'log.csv');
 
 // Log every request
 app.use((req, res, next) => {
-    // Agent tells us mozilla, time is time, method is GET, resource is /, version is HTTP/1.1(__dirname, 'log.csv');
+    // Agent tells us mozilla, time is time, method is GET, resource is /, version is HTTP
     const rawAgent = req.get('User-Agent') || '';
     const agent = rawAgent.replace(/,/g, ' ');
     const time = new Date().toISOString();
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
     res.on('finish', () => {
         const status = res.statusCode;
         // CSV Line
-        const line = `${time},${agent},${method},${resource},${version},${status}\n`;
+        const line = `${agent},${time},${method},${resource},${version},${status}\n`;
         // Append to file asynchronously
         fs.appendFile(LOG_FILE, line, (err) => {
             if (err) {
@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 app.get('/logs', (req, res) => {
     fs.readFile(LOG_FILE, 'utf8', (err, data) => {
         if (err) {
-            return res.status(500).json({ error: "Could not read lof file" });
+            return res.status(500).json({ error: "Could not read log file" });
         }
         // Split into lines and remove any empty trailing line
         const lines = data.split('\n').filter(line => line.trim() !== '');

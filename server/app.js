@@ -30,7 +30,7 @@ app.use((req, res, next) => {
             }
         });
         // Also log to console
-        console.log(line.trim())
+        console.log(line.trim());
     });
     // Proceed to  route handler
     next();
